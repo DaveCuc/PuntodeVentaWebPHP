@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretty Woman Boutique</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fff5cc, #ffccff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(to right, #ff79ac, #ffccff);
+            padding: 20px 0;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: purple;
+            margin: 0;
+            margin-left: 20px;
+            
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 80px; /* Space for the navbar */
+        }
+
+        .login-box {
+            width: 300px;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(to bottom right, #ff6699, #ffcc66);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #000;
+        }
+
+        .login-box input[type="text"], 
+        .login-box input[type="password"] {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ff99ff;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .login-box input[type="text"]:focus, 
+        .login-box input[type="password"]:focus {
+            border-color: purple;
+        }
+
+        .login-box button {
+            width: 60%;
+            padding: 10px;
+            font-size: 1em;
+            color: rgb(17, 17, 17);
+            background: rgb(255, 255, 74);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-box button:hover {
+            background-color: gold;
+        }
+
+        .login-box a {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            text-decoration: none;
+            color: purple;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>PRETTY WOMAN Boutique</h1>
+    </div>
+    <div class="container">
+        <div class="login-box">
+            <h2>Inicio de sesión</h2>
+            <input type="text" placeholder="Usuario">
+            <input type="password" placeholder="Contraseña">
+            <button>Ingresar</button>
+            <a href="sign_in.html">Crear cuenta</a>
+
+        </div>
+    </div>
+</body>
+</html>
