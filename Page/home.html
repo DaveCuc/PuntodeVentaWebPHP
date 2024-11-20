@@ -123,15 +123,29 @@
 </head>
 <body>
     <div class="navbar">
-        <h1>PRETTY WOMAN Boutique</h1>
+        <h1 herf="home.html">PRETTY WOMAN Boutique</h1>
         <div class="search-bar">
             <input type="text" placeholder="Buscar...">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon" >🔍</span>
         </div>
-        <div class="icons">
-            <div class="icon">🛒<span>0</span></div>
-            <div class="icon">👤</div>
+        <div class="icons" style="margin-right: 20px;">
+            <button class="icon" onclick="alert('Carrito: Actualmente no tienes artículos.')">🛒 <span>0</span></button>
         </div>
+        <div class="icons" style="margin-right: 20px;">
+            <button class="icon" onclick="toggleDropdown()">👤</button>
+            <div id="dropdown" class="dropdown" style="display: none;">
+                <ul>
+                    <li><a href="login.html">Iniciar sesión</a></li>
+                    <li><a href="sign_in.html">Crear cuenta</a></li>
+                    <li><a href="edit_profile.html">Editar perfil</a></li>
+                    <li><a href="products.html">Productos</a></li>
+                    <li><a href="clients.html">Clientes</a></li>
+                    <li><a href="sales.html">Ventas</a></li>
+                </ul>
+            </div>
+        </div>
+        
+
     </div>
     <div class="category-bar">Categoría 1</div>
     <div class="products">
@@ -153,3 +167,60 @@
     </div>
 </body>
 </html>
+
+
+
+<style>
+.dropdown {
+    position: absolute;
+    right: 20px; /* Aleja más el menú del borde derecho */
+    top: 60px; /* Baja más el menú */
+    background: #ff6666;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: left;
+    z-index: 1000;
+}
+
+
+
+    .dropdown ul {
+        list-style: none;
+        margin: 10;
+        padding: 0;
+    }
+
+    .dropdown ul li {
+        margin: 5px 0;
+    }
+
+    .dropdown ul li a {
+        text-decoration: none;
+        color: black;
+        font-size: 0.9em;
+    }
+
+    .dropdown ul li a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        if (dropdown.style.display === 'none') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }
+
+    // Opcional: cerrar el menú si se hace clic fuera
+    window.onclick = function(event) {
+        const dropdown = document.getElementById('dropdown');
+        if (!event.target.matches('.icon')) {
+            dropdown.style.display = 'none';
+        }
+    }
+</script>
