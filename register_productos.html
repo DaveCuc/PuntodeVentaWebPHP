@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f4d9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff7e6;
+            border: 2px solid #d1c4b2;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ff8fa0;
+            padding: 10px;
+            border-radius: 12px 12px 0 0;
+        }
+        .header h1 {
+            font-size: 20px;
+            color: white;
+            margin: 0;
+        }
+        .menu {
+            display: flex;
+            gap: 10px;
+        }
+        .menu button {
+            background-color: #b2e1e5;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .menu button:hover {
+            background-color: #8ec9cb;
+        }
+        .form-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .buttons button {
+            background-color: #ff8fa0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .buttons button:hover {
+            background-color: #ff687c;
+        }
+        .buttons .delete {
+            background-color: #b2e1e5;
+        }
+        .buttons .delete:hover {
+            background-color: #8ec9cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pretty Woman -Boutique</h1>
+            <div class="menu">
+                <button>Productos</button>
+                <button>Clientes</button>
+                <button>Ventas</button>
+            </div>
+        </div>
+        <div class="form-title">Registrar Productos</div>
+        <form method="POST" action="register_products.php">
+            <div class="form-group">
+                <label for="articulo">Artículo:</label>
+                <input type="text" id="articulo" name="articulo" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion">
+            </div>
+            <div class="form-group">
+                <label for="unidad">Unidad:</label>
+                <input type="text" id="unidad" name="unidad" maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="talla">Talla:</label>
+                <input type="text" id="talla" name="talla" maxlength="10">
+            </div>
+            <div class="form-group">
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" maxlength="30">
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" step="0.01" required>
+            </div>
+            <div class="buttons">
+                <button type="submit">Registrar</button>
+                <button type="reset" class="delete">Borrar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

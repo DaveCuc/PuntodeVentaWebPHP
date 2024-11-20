@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Clientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f4d9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff7e6;
+            border: 2px solid #d1c4b2;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ff8fa0;
+            padding: 10px;
+            border-radius: 12px 12px 0 0;
+        }
+        .header h1 {
+            font-size: 20px;
+            color: white;
+            margin: 0;
+        }
+        .menu {
+            display: flex;
+            gap: 10px;
+        }
+        .menu button {
+            background-color: #b2e1e5;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .menu button:hover {
+            background-color: #8ec9cb;
+        }
+        .form-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .buttons button {
+            background-color: #ff8fa0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .buttons button:hover {
+            background-color: #ff687c;
+        }
+        .buttons .delete {
+            background-color: #b2e1e5;
+        }
+        .buttons .delete:hover {
+            background-color: #8ec9cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Nombre de la Tienda</h1>
+            <div class="menu">
+                <button>Productos</button>
+                <button>Clientes</button>
+                <button>Ventas</button>
+            </div>
+        </div>
+        <div class="form-title">Registrar Clientes</div>
+        <form method="POST" action="register.php">
+            <div class="form-group">
+                <label for="name">Nombre del cliente:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="rfc">RFC:</label>
+                <input type="text" id="rfc" name="rfc" maxlength="13" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-group">
+                <label for="phone">Teléfono:</label>
+                <input type="text" id="phone" name="phone" maxlength="15">
+            </div>
+            <div class="form-group">
+                <label for="account_number">Número de cuenta:</label>
+                <input type="text" id="account_number" name="account_number" maxlength="20">
+            </div>
+            <div class="buttons">
+                <button type="submit">Registrar</button>
+                <button type="reset" class="delete">Borrar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
