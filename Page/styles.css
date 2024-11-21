@@ -128,7 +128,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: linear-gradient(to right, #ff79ac, #ffccff);
+            background: linear-gradient(to right, #ff9bc1, #ffe1ff);
             padding: 10px 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
@@ -262,8 +262,8 @@
             width: 80%;
             padding: 10px;
             font-size: 1em;
-            color: white;
-            background: rgb(255, 255, 101);
+            color: rgb(51, 51, 51);
+            background: rgb(255, 255, 141);
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -286,3 +286,134 @@
         .login-box a:hover {
             text-decoration: underline;
         }
+
+        .container {
+            text-align: center;
+            margin-top: 80px; /* Space for the navbar */
+        }
+
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fff5cc, #ffccff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(to right, #ff79ac, #ffccff);
+            padding: 20px 0;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: purple;
+            margin: 0;
+            margin-left: 20px;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 100px; /* Space for the navbar */
+        }
+
+        .create-box {
+            width: 300px;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(to bottom right, #ff6699, #ffcc66);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-box h2 {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #000;
+        }
+
+        .create-box input[type="text"], 
+        .create-box input[type="password"], 
+        .create-box input[type="num"], 
+        .create-box input[type="tel"] {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ff99ff;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .create-box input:focus {
+            border-color: purple;
+        }
+
+        .create-box button {
+            width: 60%;
+            padding: 10px;
+            font-size: 1em;
+            color: rgb(17, 17, 17);
+            background: rgb(255, 243, 74);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-box button:hover {
+            background-color: rgb(255, 0, 119);
+        }
+
+        a {
+            text-decoration: none; /* Elimina la línea debajo del hipervínculo */
+            color: inherit; /* Mantiene el color del texto del h1 */
+        }
+  
+
+        
+.dropdown {
+    position: absolute;
+    right: 20px; /* Aleja más el menú del borde derecho */
+    top: 60px; /* Baja más el menú */
+    background: #ff6666;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: left;
+    z-index: 1000;
+}
+
+
+
+    .dropdown ul {
+        list-style: none;
+        margin: 10;
+        padding: 0;
+    }
+
+    .dropdown ul li {
+        margin: 5px 0;
+    }
+
+    .dropdown ul li a {
+        text-decoration: none;
+        color: black;
+        font-size: 0.9em;
+    }
+
+    .dropdown ul li a:hover {
+        text-decoration: underline;
+    }
