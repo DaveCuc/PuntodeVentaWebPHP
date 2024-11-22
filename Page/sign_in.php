@@ -58,11 +58,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pretty Woman Boutique - Crear Cuenta</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="../src/scripts.js" defer></script>
 </head>
 <body>
     <div class="navbar">
-        <a href="home.html">
+        <a href="home.php">
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
     </div>
@@ -78,9 +79,9 @@ $conn->close();
                     <option value="Administrador">Administrador</option>
                 </select>
                 <input type="text" name="rfc" placeholder="RFC (Opcional)">
-                <input type="text" name="direccion" placeholder="Dirección (Opcional)">
-                <input type="text" name="telefono" placeholder="Teléfono (Opcional)">
-                <input type="text" name="no_cuenta" placeholder="Número de Cuenta (Opcional)">
+                <input type="text" name="direccion" placeholder="Dirección">
+                <input type="text" name="telefono" placeholder="Teléfono">
+                <input type="text" name="no_cuenta" placeholder="Número de Cuenta">
                 <input type="password" name="contraseña" placeholder="Contraseña" required>
                 <button type="submit" class="icon">Crear</button>
             </form>

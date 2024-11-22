@@ -336,7 +336,13 @@
             background: linear-gradient(to bottom right, #ff6699, #ffcc66);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
+        .create-box2 {
+            width: 800px;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(to bottom right, #ff6699, #ffcc66);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
         .create-box h2 {
             margin-bottom: 20px;
             font-size: 1.2em;

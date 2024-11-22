@@ -121,16 +121,26 @@ $conn->close();
     <script src="scripts.js" defer></script>
 </head>
 <body>
+    <!-- Barra de navegación -->
     <div class="navbar">
-        <h1>
-            <a href="home.html" style="text-decoration: none; color: inherit;">PRETTY WOMAN Boutique</a>
-        </h1>
-        <div class="icons">
+        <a href="home.php">
+            <h1>PRETTY WOMAN Boutique</h1>
+        </a>
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar...">
+            <span class="search-icon">🔍</span>
+        </div>
+        <div class="icons" style="margin-right: 20px;">
+            <button class="icon" onclick="alert('Carrito: Actualmente no tienes artículos.')">🛒 <span>0</span></button>
+        </div>
+        <div class="icons" style="margin-right: 20px;">
             <button class="icon" onclick="toggleDropdown()">👤</button>
-            <div id="dropdown" class="dropdown">
+            <div id="dropdown" class="dropdown" style="display: none;">
                 <ul>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li><a href="ventas.html">Ventas</a></li>
+                    <li><a href="productos.php">Productos</a></li>
+                    <li><a href="c_clientes.php">Clientes</a></li>
+                    <li><a href="ventas.php">Ventas</a></li>
+                    <li><a href="logout.php">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>

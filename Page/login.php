@@ -35,19 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Verificar la contraseña
             if (password_verify($contraseña, $usuario['Contraseña'])) {
-                // Iniciar sesión y redirigir según el rol
+                // Iniciar sesión y guardar datos del usuario
                 session_start();
                 $_SESSION['idUsuario'] = $usuario['idUsuario'];
                 $_SESSION['nombreUsuario'] = $usuario['NombreUsuario'];
                 $_SESSION['rol'] = $usuario['Rol'];
 
-                if ($usuario['Rol'] === 'Administrador') {
-                    header("Location: admin_dashboard.html");
-                } elseif ($usuario['Rol'] === 'Vendedor') {
-                    header("Location: vendedor_dashboard.html");
-                } else {
-                    header("Location: cliente_dashboard.html");
-                }
+                // Redirigir al home general
+                header("Location: home.php"); // Todos los usuarios van a `home.php`
                 exit();
             } else {
                 $mensaje = "<p class='error'>Contraseña incorrecta.</p>";
@@ -69,11 +64,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pretty Woman Boutique - Inicio de Sesión</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="../src/scripts.js" defer></script>
 </head>
 <body>
     <div class="navbar">
-        <a href="home.html">
+        <a href="home.php">
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
     </div>
@@ -85,7 +81,7 @@ $conn->close();
                 <input type="password" name="contraseña" placeholder="Contraseña" required>
                 <button type="submit">Ingresar</button>
             </form>
-            <a href="reg_clientes.php">Crear cuenta</a>
+            <a href="sign_in.php">Crear cuenta</a>
             <div class="result">
                 <?php echo $mensaje; ?>
             </div>
