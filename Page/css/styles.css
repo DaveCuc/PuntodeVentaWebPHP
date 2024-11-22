@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom right, #ffc5d8, #ffedca);
+    background: linear-gradient(to bottom right,#ffeb8f, #ffd6c5, #ff8282);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +28,7 @@ body {
 .navbar h1 {
     font-size: 1.5em;
     font-weight: bold;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     margin: 0;
     margin-left: 20px; /* Margen izquierdo para separar del borde */
 }
