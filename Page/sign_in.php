@@ -67,6 +67,11 @@ $conn->close();
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
     </div>
+
+   
+
+    </table>
+
     <div class="container">
         <div class="create-box">
             <h2>Crear cuenta</h2>
