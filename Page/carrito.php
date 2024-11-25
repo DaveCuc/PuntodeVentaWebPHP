@@ -63,25 +63,40 @@ if (isset($_POST['eliminar_producto'])) {
 
 // Realizar compra
 if (isset($_POST['realizar_compra'])) {
-    // Registrar cada producto del carrito como una venta
+    // Crear un nuevo registro para el carrito en la tabla 'carrito'
+    $carrito_query = "INSERT INTO carrito (idUsuario) VALUES ($idUsuario)";
+    if (!$conn->query($carrito_query)) {
+        echo "Error al crear el carrito: " . $conn->error;
+        exit();
+    }
+
+    // Obtener el idCarrito generado
+    $idCarrito = $conn->insert_id;
+
+    // Registrar los productos del carrito en la tabla 'ventas'
     foreach ($_SESSION['carrito'] as $idProducto => $producto) {
         $cantidad = $producto['cantidad'];
         $total = $producto['cantidad'] * $producto['precio'];
         $fecha = date('Y-m-d');
 
-        $venta_query = "INSERT INTO ventas (idProducto, idUsuario, FechaVenta, Cantidad, Total) 
-                        VALUES ($idProducto, $idUsuario, '$fecha', $cantidad, $total)";
-        $conn->query($venta_query);
+        $venta_query = "INSERT INTO ventas (idCarrito, idUsuario, FechaVenta, Total) 
+                        VALUES ($idCarrito, $idUsuario, '$fecha', $total)";
+        if (!$conn->query($venta_query)) {
+            echo "Error al registrar la venta: " . $conn->error;
+            exit();
+        }
 
         // Reducir el stock
         $nuevo_stock = $producto['stock'] - $cantidad;
         $stock_query = "UPDATE productos SET stock = $nuevo_stock WHERE idProducto = $idProducto";
-        $conn->query($stock_query);
+        if (!$conn->query($stock_query)) {
+            echo "Error al actualizar el stock: " . $conn->error;
+            exit();
+        }
     }
 
     // Vaciar el carrito después de la compra
     $_SESSION['carrito'] = [];
-
     echo "<script>alert('Compra realizada con éxito.');</script>";
 }
 
@@ -104,6 +119,7 @@ if (isset($_GET['term'])) {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,45 +127,39 @@ if (isset($_GET['term'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="src/scripts.js" defer></script>
+
     <style>
         .container {
             display: flex;
             gap: 20px;
-            justify-content: center;
+            justify-content: space-between;
             align-items: flex-start;
-            flex-wrap: wrap;
         }
 
-        .products, .cart-summary {
+        .products {
+            display: block;            
+            flex: 7;
             background: linear-gradient(90deg, #ff8fa0, #ffd77e);
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .products {
-            flex: 2;
-            max-width: 70%;
-        }
-
         .cart-summary {
-            flex: 1;
-            max-width: 30%;
+            flex: 3;
+            background: linear-gradient(90deg, #ffd77e, #ff8fa0);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            align-items: left;
         }
 
         .product-block {
+            position: relative;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
             background: white;
             margin-bottom: 15px;
             padding: 15px;
@@ -158,24 +168,41 @@ if (isset($_GET['term'])) {
         }
 
         .product-block img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 10px;
-            margin-right: 10px;
+            margin-bottom: 10px;
+            aling: left;
+        }
+
+        .product-info {
+            felx: 1 1 auto;
+            text-align: left;
+            margin: 10px; 
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: center;
+            align-items: left;
+            gap: 10px;
+            margin: 30px;
+            
         }
 
         .delete-button {
-            background-color: #ff4d4d;
-            color: white;
-            font-size: 14px;
-            padding: 5px 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
             border: none;
-            border-radius: 5px;
+            font-size: 20px;
+            color: #e60000;
             cursor: pointer;
         }
 
         .delete-button:hover {
-            background-color: #e60000;
+            color: #ff4d4d;
         }
 
         .checkout-button {
@@ -192,6 +219,7 @@ if (isset($_GET['term'])) {
         .checkout-button:hover {
             background-color: #218838;
         }
+
     </style>
 </head>
 <body>
@@ -234,44 +262,74 @@ if (isset($_GET['term'])) {
             </div>
         </div>
     </div>
-</div>
-
+    </div>
 
     <div class="container">
+        <!-- Productos en el carrito -->
         <div class="products">
-            <div class="title">Productos en el Carrito</div>
+            <h2>Productos en el Carrito</h2>
             <?php foreach ($_SESSION['carrito'] as $idProducto => $producto) { ?>
                 <div class="product-block">
+                    <form method="POST" style="display: inline;">
+                        <input type="hidden" name="idProducto" value="<?php echo $idProducto; ?>">
+                        <button type="submit" name="eliminar_producto" class="delete-button">X</button>
+                    </form>
+                    
                     <img src="<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen del producto">
-                    <div>
+
+                    <div class="product-info">
                         <p><strong><?php echo htmlspecialchars($producto['nombre']); ?></strong></p>
+                        <div class="product-info">
                         <p>Precio: $<?php echo number_format($producto['precio'], 2); ?></p>
-                        <p>Total: $<?php echo number_format($producto['cantidad'] * $producto['precio'], 2); ?></p>
                     </div>
-                    <div>
-                        <form method="POST">
+                    </div>
+                    
+                    
+
+                    <div class="product-actions">
+                        <form method="POST" style="display: inline;">
                             <input type="hidden" name="idProducto" value="<?php echo $idProducto; ?>">
                             <input type="hidden" name="nueva_cantidad" value="<?php echo $producto['cantidad'] - 1; ?>">
                             <button type="submit" name="actualizar_cantidad" <?php echo $producto['cantidad'] <= 1 ? 'disabled' : ''; ?>>-</button>
                         </form>
-                        <form method="POST">
+                        <span><?php echo $producto['cantidad']; ?></span>
+                        <form method="POST" style="display: inline;">
                             <input type="hidden" name="idProducto" value="<?php echo $idProducto; ?>">
-                            <button type="submit" name="eliminar_producto" class="delete-button">Eliminar</button>
+                            <input type="hidden" name="nueva_cantidad" value="<?php echo $producto['cantidad'] + 1; ?>">
+                            <button type="submit" name="actualizar_cantidad" <?php echo $producto['cantidad'] >= $producto['stock'] ? 'disabled' : ''; ?>>+</button>
                         </form>
+                    </div>
+
+                    <div class="product-info">
+                        <?php 
+                            $totalAmount = $producto['cantidad'] * $producto['precio'];
+                            $formattedTotal = number_format($totalAmount, 2);
+                        ?>
+                        <p style="font-weight: bold; font-size: 1.2em;">Total: $<?php echo $formattedTotal; ?></p>
                     </div>
                 </div>
             <?php } ?>
         </div>
+
+        <!-- Resumen de compra -->
         <div class="cart-summary">
-            <div class="title">Resumen de Compra</div>
+            <h2>Resumen de Compra</h2>
+
+            <div class="product-info">
             <ul>
                 <?php foreach ($_SESSION['carrito'] as $producto) { ?>
                     <li><?php echo htmlspecialchars($producto['nombre']); ?> (<?php echo $producto['cantidad']; ?>)</li>
                 <?php } ?>
             </ul>
+            </div>
+            
+            <div class="product-info" style="text-align: right; font-weight: bold; font-size: 24px;">
             <p class="total">Total: $<?php echo number_format(array_sum(array_map(function ($producto) {
                 return $producto['cantidad'] * $producto['precio'];
             }, $_SESSION['carrito'])), 2); ?></p>
+            </div>        
+
+            
             <?php if (!empty($_SESSION['carrito'])) { ?>
                 <form method="POST">
                     <button type="submit" name="realizar_compra" class="checkout-button">Realizar Compra</button>
@@ -279,6 +337,7 @@ if (isset($_GET['term'])) {
             <?php } ?>
         </div>
     </div>
+
 </body>
 </html>
 <?php

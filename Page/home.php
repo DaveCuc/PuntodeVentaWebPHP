@@ -57,6 +57,8 @@ $productos_result = $conn->query($productos_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pretty Woman Boutique - Catálogo</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="src/scripts.js" defer></script>
+
     <style>
         .product-container {
             display: grid;
