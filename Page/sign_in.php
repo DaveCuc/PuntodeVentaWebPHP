@@ -40,7 +40,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_param("ssssssss", $nombre_usuario, $contraseña_hash, $rol, $rfc, $nombre, $direccion, $telefono, $no_cuenta);
 
         if ($stmt->execute()) {
-            $resultado = "Cuenta creada con éxito.";
+            // Iniciar sesión automáticamente
+            session_start();
+            $_SESSION['idUsuario'] = $conn->insert_id; // Usar el ID del usuario recién insertado
+            $_SESSION['nombreUsuario'] = $nombre_usuario;
+            $_SESSION['rol'] = $rol;
+
+            // Redirigir a la página principal
+            header("Location: home.php");
+            exit();
         } else {
             $resultado = "Error: " . $stmt->error;
         }
@@ -51,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

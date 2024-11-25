@@ -61,7 +61,7 @@ $productos_result = $conn->query($productos_query);
 
     <style>
         .product-container {
-            display: grid;
+            display: flex;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             margin-top: 20px;
