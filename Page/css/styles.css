@@ -11,6 +11,13 @@ body {
     min-height: 100vh; /* Asegura que la altura mínima sea la del viewport */
 }
 
+.responsive-image {
+    width: 50%;
+    height: auto;
+    max-width: 400px; /* Ajusta el ancho máximo según sea necesario */
+}
+
+
 /* Navbar Styles */
 .navbar {
     position: fixed; /* Mantiene la barra fija en la parte superior */

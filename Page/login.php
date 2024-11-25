@@ -80,7 +80,7 @@ $conn->close();
         <td style="width: 65%; vertical-align: top;">
             <div class="container">
                 <div id="mi_estilo" style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">
-                    Bienvenido a mi Página Web
+                    <h1>Bienvenido</h1>
                 </div>
 
                 <!-- Slideshow -->
@@ -88,20 +88,24 @@ $conn->close();
                     <!-- Slides -->
                     <div class="mySlides fade">
                         <div class="numbertext">1 / 3</div>
-                        <img src="image/1.jpg" style="width: 40%; height: auto; display: block; margin: auto;">
-                        <div class="text">TCNM Veracruz</div>
+                        <img src="https://m.media-amazon.com/images/I/81ji1C9gb-L._AC_SX522_.jpg" class="responsive-image" alt="Descripción de la imagen">
+                        <div class="text">Recibe este Invierno a la moda</div>
+
+
                     </div>
 
                     <div class="mySlides fade">
                         <div class="numbertext">2 / 3</div>
-                        <img src="image/2.jpg" style="width: 40%; height: auto; display: block; margin: auto;">
-                        <div class="text">☝🏻</div>
+                        <img src="https://m.media-amazon.com/images/I/81wxWyRCvzL._AC_SX679_.jpg" class="responsive-image" alt="Descripción de la imagen">
+                        <div class="text">Winter 2024-2025</div>
+
                     </div>
 
                     <div class="mySlides fade">
                         <div class="numbertext">3 / 3</div>
-                        <img src="image/3.jpg" style="width: 40%; height: auto; display: block; margin: auto;">
-                        <div class="text">ING. SCP</div>
+                        <img src="https://m.media-amazon.com/images/I/810KOlO6xXL._AC_SX522_.jpg" class="responsive-image" alt="Descripción de la imagen">
+                        <div class="text">Arpovecha los descuentos del Buen Fin</div>
+
                     </div>
 
                     <!-- Navigation buttons -->

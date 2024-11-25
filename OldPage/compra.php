@@ -1,22 +1,15 @@
 <?php
-session_start();
-
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['idUsuario'])) {
-    header("Location: login.php");
-    exit();
-}
-
-// Obtener datos del usuario desde la sesión
-$idUsuario = $_SESSION['idUsuario'];
-$nombreUsuario = $_SESSION['nombreUsuario'];
-$rolUsuario = $_SESSION['rol'];
-
 // Incluir la conexión a la base de datos
 include('db_connection2.php');
 
-// Inicializar el carrito si no existe
+// Inicializar la sesión para manejar el carrito
+session_start();
 if (!isset($_SESSION['carrito'])) {
+    $_SESSION['carrito'] = [];
+}
+
+// Vaciar el carrito
+if (isset($_POST['vaciar_carrito'])) {
     $_SESSION['carrito'] = [];
 }
 
@@ -61,30 +54,6 @@ if (isset($_POST['eliminar_producto'])) {
     unset($_SESSION['carrito'][$idProducto]);
 }
 
-// Realizar compra
-if (isset($_POST['realizar_compra'])) {
-    // Registrar cada producto del carrito como una venta
-    foreach ($_SESSION['carrito'] as $idProducto => $producto) {
-        $cantidad = $producto['cantidad'];
-        $total = $producto['cantidad'] * $producto['precio'];
-        $fecha = date('Y-m-d');
-
-        $venta_query = "INSERT INTO ventas (idProducto, idUsuario, FechaVenta, Cantidad, Total) 
-                        VALUES ($idProducto, $idUsuario, '$fecha', $cantidad, $total)";
-        $conn->query($venta_query);
-
-        // Reducir el stock
-        $nuevo_stock = $producto['stock'] - $cantidad;
-        $stock_query = "UPDATE productos SET stock = $nuevo_stock WHERE idProducto = $idProducto";
-        $conn->query($stock_query);
-    }
-
-    // Vaciar el carrito después de la compra
-    $_SESSION['carrito'] = [];
-
-    echo "<script>alert('Compra realizada con éxito.');</script>";
-}
-
 // Buscar productos para el autocompletado
 if (isset($_GET['term'])) {
     $term = $conn->real_escape_string($_GET['term']);
@@ -101,17 +70,24 @@ if (isset($_GET['term'])) {
 
     header('Content-Type: application/json');
     echo json_encode($productos);
-    exit();
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
-    <link rel="stylesheet" href="css/styles.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
         .container {
             display: flex;
             gap: 20px;
@@ -146,6 +122,38 @@ if (isset($_GET['term'])) {
             margin-bottom: 20px;
         }
 
+        .search-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-box input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        .suggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+
         .product-block {
             display: flex;
             align-items: center;
@@ -164,6 +172,39 @@ if (isset($_GET['term'])) {
             margin-right: 10px;
         }
 
+        .product-block-info {
+            flex: 1;
+            padding: 0 15px;
+        }
+
+        .product-block-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .product-block-actions button {
+            background-color: #ff8fa0;
+            border: none;
+            color: white;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product-block-actions button:hover {
+            background-color: #ff687c;
+        }
+
+        .product-block-actions input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
         .delete-button {
             background-color: #ff4d4d;
             color: white;
@@ -178,107 +219,135 @@ if (isset($_GET['term'])) {
             background-color: #e60000;
         }
 
-        .checkout-button {
-            background-color: #28a745;
-            color: white;
+        .cart-summary ul {
+            width: 100%;
+            text-align: left;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .cart-summary ul li {
+            margin-bottom: 10px;
+        }
+
+        .cart-summary .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .cart-summary button {
+            background-color: #ffe600;
+            color: black;
             font-size: 16px;
             font-weight: bold;
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
-        .checkout-button:hover {
-            background-color: #218838;
+        .cart-summary button:hover {
+            background-color: #ffcc00;
         }
     </style>
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <div class="navbar">
-    <a href="home.php">
-        <h1>PRETTY WOMAN Boutique</h1>
-    </a>
-    <div class="search-bar">
-        <input type="text" placeholder="Buscar...">
-        <span class="search-icon">🔍</span>
-    </div>
-    <div class="icons">
-        <!-- Botón del carrito -->
-        <button class="icon" onclick="window.location='carrito.php'">
-            🛒 <span>
-                <?php
-                // Calcular la cantidad total de productos en el carrito
-                $totalProductosEnCarrito = array_sum(array_column($_SESSION['carrito'], 'cantidad'));
-                echo $totalProductosEnCarrito;
-                ?>
-            </span>
-        </button>
-        <!-- Botón del usuario -->
-        <div>
-            <button class="icon" onclick="toggleDropdown()">
-                <?php echo $nombreUsuario; ?> 👤
-            </button>
-            <div id="dropdown" class="dropdown">
-                <ul>
-                    <?php if ($rolUsuario === 'Administrador'): ?>
-                        <li><a href="productos.php">Gestionar Productos</a></li>
-                        <li><a href="c_clientes.php">Gestionar Clientes</a></li>
-                        <li><a href="ventas.php">Ver Ventas</a></li>
-                    <?php else: ?>
-                        <li><a href="carrito.php">Carrito de Compras</a></li>
-                    <?php endif; ?>
-                    <li><a href="logout.php">Cerrar Sesión</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-
     <div class="container">
         <div class="products">
-            <div class="title">Productos en el Carrito</div>
+            <div class="title">Buscar Productos</div>
+            <div class="search-box">
+                <input type="text" placeholder="Buscar producto por nombre o ID" id="search">
+                <div id="suggestions" class="suggestions"></div>
+            </div>
             <?php foreach ($_SESSION['carrito'] as $idProducto => $producto) { ?>
                 <div class="product-block">
                     <img src="<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen del producto">
-                    <div>
+                    <div class="product-block-info">
                         <p><strong><?php echo htmlspecialchars($producto['nombre']); ?></strong></p>
                         <p>Precio: $<?php echo number_format($producto['precio'], 2); ?></p>
-                        <p>Total: $<?php echo number_format($producto['cantidad'] * $producto['precio'], 2); ?></p>
                     </div>
-                    <div>
-                        <form method="POST">
+                    <div class="product-block-actions">
+                        <form method="POST" style="display: inline;">
                             <input type="hidden" name="idProducto" value="<?php echo $idProducto; ?>">
                             <input type="hidden" name="nueva_cantidad" value="<?php echo $producto['cantidad'] - 1; ?>">
                             <button type="submit" name="actualizar_cantidad" <?php echo $producto['cantidad'] <= 1 ? 'disabled' : ''; ?>>-</button>
                         </form>
-                        <form method="POST">
+                        <input type="number" value="<?php echo $producto['cantidad']; ?>" readonly>
+                        <form method="POST" style="display: inline;">
                             <input type="hidden" name="idProducto" value="<?php echo $idProducto; ?>">
-                            <button type="submit" name="eliminar_producto" class="delete-button">Eliminar</button>
+                            <input type="hidden" name="nueva_cantidad" value="<?php echo $producto['cantidad'] + 1; ?>">
+                            <button type="submit" name="actualizar_cantidad" <?php echo $producto['cantidad'] >= $producto['stock'] ? 'disabled' : ''; ?>>+</button>
                         </form>
                     </div>
+                    <p>Total: $<?php echo number_format($producto['cantidad'] * $producto['precio'], 2); ?></p>
+                    <form method="POST" style="display: inline;">
+                        <input type="hidden" name="idProducto" value="<?php echo $idProducto; ?>">
+                        <button type="submit" name="eliminar_producto" class="delete-button">Eliminar</button>
+                    </form>
                 </div>
             <?php } ?>
         </div>
         <div class="cart-summary">
-            <div class="title">Resumen de Compra</div>
+            <div class="title">Carrito de Compras</div>
             <ul>
-                <?php foreach ($_SESSION['carrito'] as $producto) { ?>
-                    <li><?php echo htmlspecialchars($producto['nombre']); ?> (<?php echo $producto['cantidad']; ?>)</li>
+                <?php if (empty($_SESSION['carrito'])) { ?>
+                    <li>Tu carrito está vacío.</li>
+                <?php } else { ?>
+                    <?php foreach ($_SESSION['carrito'] as $producto) { ?>
+                        <li><?php echo htmlspecialchars($producto['nombre']); ?> (<?php echo $producto['cantidad']; ?>)</li>
+                    <?php } ?>
                 <?php } ?>
             </ul>
             <p class="total">Total: $<?php echo number_format(array_sum(array_map(function ($producto) {
                 return $producto['cantidad'] * $producto['precio'];
             }, $_SESSION['carrito'])), 2); ?></p>
-            <?php if (!empty($_SESSION['carrito'])) { ?>
-                <form method="POST">
-                    <button type="submit" name="realizar_compra" class="checkout-button">Realizar Compra</button>
-                </form>
-            <?php } ?>
+            <form method="POST">
+                <button type="submit" name="vaciar_carrito">Vaciar Carrito</button>
+            </form>
         </div>
     </div>
+
+    <script>
+        const searchInput = document.getElementById('search');
+        const suggestionsBox = document.getElementById('suggestions');
+
+        searchInput.addEventListener('input', async () => {
+            const term = searchInput.value.trim();
+
+            if (term.length > 0) {
+                const response = await fetch(`?term=${term}`);
+                const products = await response.json();
+
+                suggestionsBox.innerHTML = '';
+                products.forEach(product => {
+                    const div = document.createElement('div');
+                    div.textContent = `${product.Articulo} (ID: ${product.idProducto})`;
+                    div.dataset.idProducto = product.idProducto;
+                    suggestionsBox.appendChild(div);
+                });
+
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        suggestionsBox.addEventListener('click', (event) => {
+            const selectedProduct = event.target;
+            const idProducto = selectedProduct.dataset.idProducto;
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.innerHTML = `
+                <input type="hidden" name="idProducto" value="${idProducto}">
+                <input type="hidden" name="cantidad" value="1">
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        });
+    </script>
 </body>
 </html>
 <?php
