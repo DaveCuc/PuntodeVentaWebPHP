@@ -74,79 +74,83 @@ $conn->close();
         </a>
     </div>
 
-    <table border="0">
-        <td style = "width: 65%;">
-        <div class="container">
-			<div id="mi_estilo">Bienvenido a mi Página Web</div>
-			<br>
+    <table border="0" style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <!-- Columna para el slideshow -->
+        <td style="width: 65%; vertical-align: top;">
+            <div class="container">
+                <div id="mi_estilo" style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">
+                    Bienvenido a mi Página Web
+                </div>
 
-			<div class="slideshow-container">
+                <!-- Slideshow -->
+                <div class="slideshow-container" style="position: relative; max-width: 100%; margin: auto;">
+                    <!-- Slides -->
+                    <div class="mySlides fade">
+                        <div class="numbertext">1 / 3</div>
+                        <img src="image/1.jpg" style="width: 40%; height: auto; display: block; margin: auto;">
+                        <div class="text">TCNM Veracruz</div>
+                    </div>
 
-				<!-- Full-width images with number and caption text -->
-				<div class="mySlides fade">
-				  <div class="numbertext">1 / 3</div>
-				  <img src="image/1.jpg" style="width:20%">
-				  <div class="text">TCNM Veracruz</div>
-				</div>
-			  
-				<div class="mySlides fade">
-				  <div class="numbertext">2 / 3</div>
-				  <img src="image/2.jpg" style="width:20%">
-				  <div class="text">☝🏻</div>
-				</div>
-			  
-				<div class="mySlides fade">
-				  <div class="numbertext">3 / 3</div>
-				  <img src="image/3.jpg" style="width:20%">
-				  <div class="text">ING. SCP</div>
-				</div>
-			  
-				<!-- Next and previous buttons -->
-				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-				<a class="next" onclick="plusSlides(1)">&#10095;</a>
-			  </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">2 / 3</div>
+                        <img src="image/2.jpg" style="width: 40%; height: auto; display: block; margin: auto;">
+                        <div class="text">☝🏻</div>
+                    </div>
 
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 3</div>
+                        <img src="image/3.jpg" style="width: 40%; height: auto; display: block; margin: auto;">
+                        <div class="text">ING. SCP</div>
+                    </div>
 
-              <div style="text-align:center">
-				<span class="dot" onclick="currentSlide(1)"></span>
-				<span class="dot" onclick="currentSlide(2)"></span>
-				<span class="dot" onclick="currentSlide(3)"></span>
-			  </div>
+                    <!-- Navigation buttons -->
+                    <a class="prev" onclick="plusSlides(-1)" style="left: 0;">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)" style="right: 0;">&#10095;</a>
+                </div>
 
-              
-			  <script>
-				let slideIndex = 1;
-				showSlides(slideIndex);
-				
-				function plusSlides(n) {
-				  showSlides(slideIndex += n);
-				}
-				
-				function currentSlide(n) {
-				  showSlides(slideIndex = n);
-				}
-				
-				function showSlides(n) {
-				  let i;
-				  let slides = document.getElementsByClassName("mySlides");
-				  let dots = document.getElementsByClassName("dot");
-				  if (n > slides.length) {slideIndex = 1}    
-				  if (n < 1) {slideIndex = slides.length}
-				  for (i = 0; i < slides.length; i++) {
-					slides[i].style.display = "none";  
-				  }
-				  for (i = 0; i < dots.length; i++) {
-					dots[i].className = dots[i].className.replace(" active", "");
-				  }
-				  slides[slideIndex-1].style.display = "block";  
-				  dots[slideIndex-1].className += " active";
-				}
-				</script>
+                <!-- Dots -->
+                <div style="text-align:center; margin-top: 10px;">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
 
+                <!-- JavaScript -->
+                <script>
+                    let slideIndex = 1;
+                    showSlides(slideIndex);
+
+                    function plusSlides(n) {
+                        showSlides(slideIndex += n);
+                    }
+
+                    function currentSlide(n) {
+                        showSlides(slideIndex = n);
+                    }
+
+                    function showSlides(n) {
+                        let i;
+                        let slides = document.getElementsByClassName("mySlides");
+                        let dots = document.getElementsByClassName("dot");
+                        if (n > slides.length) { slideIndex = 1; }
+                        if (n < 1) { slideIndex = slides.length; }
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        dots[slideIndex - 1].className += " active";
+                    }
+                </script>
+            </div>
         </td>
+
         <td>
             <div class="container">
-            <div class="login-box">
+            <div class="login-box" style="max-width: 300px; margin: auto; padding: 20px;">
                 <h2>Inicio de sesión</h2>
                 <form method="POST" action="">
                     <input type="text" name="nombre_usuario" placeholder="Usuario" required>
@@ -159,8 +163,8 @@ $conn->close();
                 </div>
             </div>
         </div>
-
         </td>
+      </table>
 
 </body>
 </html>

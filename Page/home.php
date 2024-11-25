@@ -8,9 +8,14 @@ if (!isset($_SESSION['idUsuario'])) {
 }
 
 // Obtener datos del usuario desde la sesión
+$idUsuario = $_SESSION['idUsuario'];
 $nombreUsuario = $_SESSION['nombreUsuario'];
-$rolUsuario = $_SESSION['rol']; // Rol del usuario (Administrador o Cliente)
+$rolUsuario = $_SESSION['rol'];
+
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,27 +28,32 @@ $rolUsuario = $_SESSION['rol']; // Rol del usuario (Administrador o Cliente)
 </head>
 <body>
     <!-- Barra de navegación -->
-    <div class="navbar">
-        <a href="home.php">
-            <h1>PRETTY WOMAN Boutique</h1>
-        </a>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar...">
-            <span class="search-icon">🔍</span>
-        </div>
-        <div class="icons" style="margin-right: 20px;">
-            <button class="icon" onclick="alert('Carrito: Actualmente no tienes artículos.')">🛒 <span>0</span></button>
-        </div>
-        <div class="icons" style="margin-right: 20px;">
-            <button class="icon" onclick="toggleDropdown()"> <?php echo $nombreUsuario; ?> 👤</button>
-            <div id="dropdown" class="dropdown" style="display: none;">
+<div class="navbar">
+    <a href="home.php">
+        <h1>PRETTY WOMAN Boutique</h1>
+    </a>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar...">
+        <span class="search-icon">🔍</span>
+    </div>
+    <div class="icons">
+        <!-- Botón del carrito -->
+        <button class="icon" onclick="alert('Carrito: Actualmente no tienes artículos.')">
+            🛒 <span>0</span>
+        </button>
+
+        <!-- Botón del usuario -->
+        <div>
+            <button class="icon" onclick="toggleDropdown()">
+                <?php echo $nombreUsuario; ?> 👤
+            </button>
+            <div id="dropdown" class="dropdown">
                 <ul>
                     <?php if ($rolUsuario === 'Administrador'): ?>
                         <li><a href="productos.php">Gestionar Productos</a></li>
                         <li><a href="c_clientes.php">Gestionar Clientes</a></li>
                         <li><a href="ventas.php">Ver Ventas</a></li>
-                        <li><a href="moni.php">moni</a></li>
-
+                        <li><a href="moni.php">Moni</a></li>
                     <?php else: ?>
                         <li><a href="carrito.php">Carrito de Compras</a></li>
                     <?php endif; ?>
@@ -52,6 +62,8 @@ $rolUsuario = $_SESSION['rol']; // Rol del usuario (Administrador o Cliente)
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Contenido principal -->
     <div class="container">
@@ -68,13 +80,13 @@ $rolUsuario = $_SESSION['rol']; // Rol del usuario (Administrador o Cliente)
                 <li><a href="moni.php">moni</a></li>
             </ul>
         <?php else: ?>
-            <p>Este es tu portal de cliente. Aquí puedes gestionar tu carrito de compras.</p>
-            <!-- Opciones específicas para el Cliente -->
-            <ul>
-                <li><a href="carrito.php">Carrito de Compras</a></li>
-            </ul>
+            <p>Este es tu portal de cliente.</p>
         <?php endif; ?>
     </div>
+    <!----------------------------------------------------------------------------------------------------------------------->
+    <!-- seccion de productos en venta -->
+
+
 
     <!-- Pie de página -->
     <footer>

@@ -132,16 +132,18 @@ $conn->close();
         </div>
         <div class="icons" style="margin-right: 20px;">
             <button class="icon" onclick="alert('Carrito: Actualmente no tienes artículos.')">🛒 <span>0</span></button>
-        </div>
-        <div class="icons" style="margin-right: 20px;">
-            <button class="icon" onclick="toggleDropdown()">👤</button>
-            <div id="dropdown" class="dropdown" style="display: none;">
-                <ul>
-                    <li><a href="productos.php">Productos</a></li>
-                    <li><a href="c_clientes.php">Clientes</a></li>
-                    <li><a href="ventas.php">Ventas</a></li>
-                    <li><a href="logout.php">Cerrar Sesión</a></li>
-                </ul>
+        
+
+            <div class="icons" style="margin-right: 20px;">
+                <button class="icon" onclick="toggleDropdown()">👤</button>
+                <div id="dropdown" class="dropdown" style="display: none;">
+                    <ul>
+                        <li><a href="productos.php">Productos</a></li>
+                        <li><a href="c_clientes.php">Clientes</a></li>
+                        <li><a href="ventas.php">Ventas</a></li>
+                        <li><a href="logout.php">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
