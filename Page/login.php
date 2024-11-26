@@ -1,17 +1,6 @@
 <?php
-// Configuración de la conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "newtienda";
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+// Incluir la conexión a la base de datos
+include('db_connection2.php');
 
 $mensaje = "";
 
@@ -57,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

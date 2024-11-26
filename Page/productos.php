@@ -12,17 +12,8 @@ $idUsuario = $_SESSION['idUsuario'];
 $nombreUsuario = $_SESSION['nombreUsuario'] ?? 'Usuario';
 $rolUsuario = $_SESSION['rol'] ?? 'Cliente';
 
-// Configuración de la conexión a la base de datos
-$host = "localhost";
-$usuario = "root";
-$password = "";
-$base_de_datos = "newtienda";
-
-$conn = new mysqli($host, $usuario, $password, $base_de_datos);
-
-if ($conn->connect_error) {
-    die("Error en la conexión: " . $conn->connect_error);
-}
+// Incluir la conexión a la base de datos
+include('db_connection2.php');
 
 // Manejo de solicitudes POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

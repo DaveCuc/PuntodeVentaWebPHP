@@ -25,8 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProducto']) && isse
     $idProducto = $_POST['idProducto'];
     $cantidad = $_POST['cantidad'];
 
-    $producto_query = "SELECT idProducto, Articulo, Precio, linkImagen, stock FROM productos WHERE idProducto = $idProducto";
-    $producto_result = $conn->query($producto_query);
+    $producto_query = "SELECT idProducto, Articulo, Precio, linkImagen, stock FROM productos WHERE idProducto = ?";
+    $stmt = $conn->prepare($producto_query);
+    $stmt->bind_param("i", $idProducto);
+    $stmt->execute();
+    $producto_result = $stmt->get_result();
     $producto = $producto_result->fetch_assoc();
 
     if ($producto) {
@@ -96,12 +99,15 @@ if (isset($_POST['realizar_compra'])) {
     echo "<script>alert('Compra realizada con éxito.');</script>";
 }
 
-
 // Buscar productos para el autocompletado
 if (isset($_GET['term'])) {
     $term = $conn->real_escape_string($_GET['term']);
-    $query = "SELECT idProducto, Articulo FROM productos WHERE Articulo LIKE '%$term%' LIMIT 10";
-    $result = $conn->query($query);
+    $query = "SELECT idProducto, Articulo FROM productos WHERE Articulo LIKE ? LIMIT 10";
+    $likeTerm = "%$term%";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $likeTerm);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     $productos = [];
     while ($row = $result->fetch_assoc()) {
@@ -116,6 +122,8 @@ if (isset($_GET['term'])) {
     exit();
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -229,6 +237,7 @@ if (isset($_GET['term'])) {
     
     <div class="icons">
         <!-- Botón del carrito -->
+        <!-- Botón del carrito -->
         <button class="icon" onclick="window.location='carrito.php'">
             🛒 <span>
                 <?php
@@ -248,7 +257,7 @@ if (isset($_GET['term'])) {
                     <?php if ($rolUsuario === 'Administrador'): ?>
                         <li><a href="productos.php">Gestionar Productos</a></li>
                         <li><a href="c_clientes.php">Gestionar Clientes</a></li>
-                        <li><a href="ventasOld.php">Ver Ventas</a></li>
+                        <li><a href="ventas.php">Ver Ventas</a></li>
                     <?php else: ?>
                         <li><a href="carrito.php">Carrito de Compras</a></li>
                     <?php endif; ?>
