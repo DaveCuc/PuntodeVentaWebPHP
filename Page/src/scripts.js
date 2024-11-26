@@ -34,4 +34,16 @@
         }
 
 
+        function changeQuantity(button, change) {
+            const container = button.parentElement;
+            const input = container.querySelector('input[name="cantidad"]');
+            let currentValue = parseInt(input.value);
+            const max = parseInt(input.max);
+
+            currentValue += change;
+            if (currentValue > max) currentValue = max;
+            if (currentValue < 1) currentValue = 1;
+
+            input.value = currentValue;
+        }
 

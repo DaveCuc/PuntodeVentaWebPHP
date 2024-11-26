@@ -60,84 +60,92 @@ $productos_result = $conn->query($productos_query);
     <script src="src/scripts.js" defer></script>
 
     <style>
-        .product-container {
-            display: flex;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
 
-        .product-card {
-            background: linear-gradient(90deg, #ff8fa0, #ffd77e);
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            position: relative;
-        }
+    .product-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 1px;
+    justify-content: center; /* Centra las filas horizontalmente */
+    padding: 80px;
+}
 
-        .product-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
+.product-card {
+    background: linear-gradient(90deg, #ff8fa0, #ffd77e);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación para hover */
+}
 
-        .product-card h3 {
-            font-size: 18px;
-            margin: 10px 0;
-        }
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 
-        .product-card p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
+.product-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
 
-        .product-description {
-            font-size: 14px;
-            color: #555;
-            margin: 10px 0;
-        }
+.product-card p {
+    font-size: 16px;
+    margin: 5px 0;
+}
 
-        .quantity-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            margin-top: 10px;
-        }
+.product-description {
+    font-size: 14px;
+    color: #555;
+    margin: 10px 0;
+}
 
-        .quantity-container input {
-            width: 50px;
-            text-align: center;
-        }
+.quantity-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
 
-        .add-to-cart-btn {
-            background-color: #28a745;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+.quantity-container input {
+    width: 50px;
+    text-align: center;
+}
 
-        .add-to-cart-btn:hover {
-            background-color: #218838;
-        }
+.add-to-cart-btn {
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838;
+}
+
+.product-card:hover {
+    transform: scale(1.05); /* Efecto de aumento */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más marcada */
+}
+
     </style>
 </head>
 <body>
+    
     <!-- Barra de navegación -->
     <div class="navbar">
     <a href="home.php">
         <h1>PRETTY WOMAN Boutique</h1>
     </a>
-    <div class="search-bar">
-        <input type="text" placeholder="Buscar...">
-        <span class="search-icon">🔍</span>
-    </div>
+    
     <div class="icons">
         <!-- Botón del carrito -->
         <button class="icon" onclick="window.location='carrito.php'">
@@ -198,20 +206,8 @@ $productos_result = $conn->query($productos_query);
     <footer>
         <p>© 2024 Pretty Woman Boutique. Todos los derechos reservados.</p>
     </footer>
-    <script>
-        function changeQuantity(button, change) {
-            const container = button.parentElement;
-            const input = container.querySelector('input[name="cantidad"]');
-            let currentValue = parseInt(input.value);
-            const max = parseInt(input.max);
 
-            currentValue += change;
-            if (currentValue > max) currentValue = max;
-            if (currentValue < 1) currentValue = 1;
-
-            input.value = currentValue;
-        }
-    </script>
+    
 </body>
 </html>
 <?php

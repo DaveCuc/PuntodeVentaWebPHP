@@ -431,3 +431,104 @@ a {
 .producto button:hover {
     background-color: #e05549;
 }
+
+
+/*-----------------------------------------------------------------------------------------*/
+
+
+
+
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ffdcf4;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: hsl(325, 100%, 87%);
+    color: #d1a0ff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #ffbce3;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead {
+    background-color: #ffe0f6;
+    color: rgb(176, 80, 255);
+}
+
+thead th {
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffd3d3;
+}
+
+tbody tr:hover {
+    background-color: hwb(283 80% 0%);
+}
+
+td, th {
+    padding: 10px;
+    border: 1px solid #ffccff;
+    font-size: 14px;
+    text-align: left;
+}
+
+.error {
+    color: #ff6b7a;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.success {
+    color: #b48cff;
+    font-weight: bold;
+    margin-top: 10px;
+}

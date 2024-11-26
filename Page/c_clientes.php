@@ -119,6 +119,15 @@ $conn->close();
     <title>Consulta Usuarios</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="src/scripts.js" defer></script>
+
+    <style>
+
+
+
+
+
+    </style>
+
 </head>
 <body>
     <!-- Barra de navegación -->
@@ -126,10 +135,7 @@ $conn->close();
         <a href="home.php">
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar...">
-            <span class="search-icon">🔍</span>
-        </div>
+        
         <div class="icons" style="margin-right: 20px;">
             <button class="icon" onclick="alert('Carrito: Actualmente no tienes artículos.')">🛒 <span>0</span></button>
         
@@ -164,5 +170,8 @@ $conn->close();
             <?php echo $resultado; ?>
         </div>
     </div>
+    <footer>
+        <p>© 2024 Pretty Woman Boutique. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>

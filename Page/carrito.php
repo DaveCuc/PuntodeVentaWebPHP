@@ -63,34 +63,30 @@ if (isset($_POST['eliminar_producto'])) {
 
 // Realizar compra
 if (isset($_POST['realizar_compra'])) {
-    // Crear un nuevo registro para el carrito en la tabla 'carrito'
-    $carrito_query = "INSERT INTO carrito (idUsuario) VALUES ($idUsuario)";
-    if (!$conn->query($carrito_query)) {
-        echo "Error al crear el carrito: " . $conn->error;
-        exit();
-    }
-
-    // Obtener el idCarrito generado
-    $idCarrito = $conn->insert_id;
-
-    // Registrar los productos del carrito en la tabla 'ventas'
+    // Registrar cada producto del carrito como una venta
     foreach ($_SESSION['carrito'] as $idProducto => $producto) {
         $cantidad = $producto['cantidad'];
         $total = $producto['cantidad'] * $producto['precio'];
         $fecha = date('Y-m-d');
 
-        $venta_query = "INSERT INTO ventas (idCarrito, idUsuario, FechaVenta, Total) 
-                        VALUES ($idCarrito, $idUsuario, '$fecha', $total)";
-        if (!$conn->query($venta_query)) {
-            echo "Error al registrar la venta: " . $conn->error;
+        $venta_query = "INSERT INTO ventas (idProducto, idUsuario, FechaVenta, Total) 
+                        VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($venta_query);
+        $stmt->bind_param("iisd", $idProducto, $idUsuario, $fecha, $total);
+
+        if (!$stmt->execute()) {
+            echo "Error al registrar la venta: " . $stmt->error;
             exit();
         }
 
         // Reducir el stock
         $nuevo_stock = $producto['stock'] - $cantidad;
-        $stock_query = "UPDATE productos SET stock = $nuevo_stock WHERE idProducto = $idProducto";
-        if (!$conn->query($stock_query)) {
-            echo "Error al actualizar el stock: " . $conn->error;
+        $stock_query = "UPDATE productos SET stock = ? WHERE idProducto = ?";
+        $stmt_stock = $conn->prepare($stock_query);
+        $stmt_stock->bind_param("ii", $nuevo_stock, $idProducto);
+
+        if (!$stmt_stock->execute()) {
+            echo "Error al actualizar el stock: " . $stmt_stock->error;
             exit();
         }
     }
@@ -99,6 +95,7 @@ if (isset($_POST['realizar_compra'])) {
     $_SESSION['carrito'] = [];
     echo "<script>alert('Compra realizada con éxito.');</script>";
 }
+
 
 // Buscar productos para el autocompletado
 if (isset($_GET['term'])) {
@@ -119,6 +116,7 @@ if (isset($_GET['term'])) {
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -228,10 +226,7 @@ if (isset($_GET['term'])) {
     <a href="home.php">
         <h1>PRETTY WOMAN Boutique</h1>
     </a>
-    <div class="search-bar">
-        <input type="text" placeholder="Buscar...">
-        <span class="search-icon">🔍</span>
-    </div>
+    
     <div class="icons">
         <!-- Botón del carrito -->
         <button class="icon" onclick="window.location='carrito.php'">
@@ -253,7 +248,7 @@ if (isset($_GET['term'])) {
                     <?php if ($rolUsuario === 'Administrador'): ?>
                         <li><a href="productos.php">Gestionar Productos</a></li>
                         <li><a href="c_clientes.php">Gestionar Clientes</a></li>
-                        <li><a href="ventas.php">Ver Ventas</a></li>
+                        <li><a href="ventasOld.php">Ver Ventas</a></li>
                     <?php else: ?>
                         <li><a href="carrito.php">Carrito de Compras</a></li>
                     <?php endif; ?>
@@ -337,7 +332,9 @@ if (isset($_GET['term'])) {
             <?php } ?>
         </div>
     </div>
-
+    <footer>
+        <p>© 2024 Pretty Woman Boutique. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>
 <?php
