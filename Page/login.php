@@ -30,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['nombreUsuario'] = $usuario['NombreUsuario'];
                 $_SESSION['rol'] = $usuario['Rol'];
 
-                // Redirigir al home general
-                header("Location: home.php"); // Todos los usuarios van a `home.php`
+                // Redirigir al index general
+                header("Location: index.php"); // Todos los usuarios van a `index.php`
                 exit();
             } else {
                 $mensaje = "<p class='error'>Contraseña incorrecta.</p>";
@@ -54,12 +54,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pretty Woman Boutique - Inicio de Sesión</title>
-    <link rel="stylesheet" href="css/styles.css"?v=<?php echo time(); ?>">"
+    <link rel="stylesheet" href="css/styles.css?v=1.1"?v=<?php echo time(); ?>">"
     <script src="../src/scripts.js" defer></script>
 </head>
 <body>
     <div class="navbar">
-        <a href="home.php">
+        <a href="index.php">
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
     </div>

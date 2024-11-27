@@ -510,16 +510,7 @@ tbody tr:nth-child(even) {
     background-color: #ffd3d3;
 }
 
-tbody tr:hover {
-    background-color: hwb(283 80% 0%);
-}
 
-td, th {
-    padding: 10px;
-    border: 1px solid #ffccff;
-    font-size: 14px;
-    text-align: left;
-}
 
 .error {
     color: #ff6b7a;

@@ -110,19 +110,11 @@ $conn->close();
     <link rel="stylesheet" href="css/styles.css">
     <script src="src/scripts.js" defer></script>
 
-    <style>
-
-
-
-
-
-    </style>
-
 </head>
 <body>
     <!-- Barra de navegación -->
     <div class="navbar">
-        <a href="home.php">
+        <a href="index.php">
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
         

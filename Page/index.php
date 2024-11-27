@@ -142,7 +142,7 @@ $productos_result = $conn->query($productos_query);
     
     <!-- Barra de navegación -->
     <div class="navbar">
-    <a href="home.php">
+    <a href="index.php">
         <h1>PRETTY WOMAN Boutique</h1>
     </a>
     

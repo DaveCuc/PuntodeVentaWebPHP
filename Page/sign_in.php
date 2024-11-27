@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['rol'] = $rol;
 
             // Redirigir a la página principal
-            header("Location: home.php");
+            header("Location: index.php");
             exit();
         } else {
             $resultado = "Error: " . $stmt->error;
@@ -62,7 +62,7 @@ $conn->close();
 </head>
 <body>
     <div class="navbar">
-        <a href="home.php">
+        <a href="index.php">
             <h1>PRETTY WOMAN Boutique</h1>
         </a>
     </div>

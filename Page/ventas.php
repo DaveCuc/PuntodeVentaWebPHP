@@ -178,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!-- Barra de navegación -->
 <div class="navbar">
-    <a href="home.php">
+    <a href="index.php">
         <h1>PRETTY WOMAN Boutique</h1>
     </a>
     
