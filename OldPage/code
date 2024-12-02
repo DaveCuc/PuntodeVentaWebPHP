@@ -1,12 +1,18 @@
 <label for="talla">Talla:</label>
-                <select id="text" name="talla" required>
+               <select id="talla" name="talla" required>
                     <option value="">Seleccione una talla</option>
-                    <option value="ss">SS</option>
-                    <option value="s">S</option>
-                    <option value="m">M</option>
-                    <option value="l">L</option>
-                    <option value="xl">XL</option>
+                    <option value="ss" <?php echo ($_GET['talla'] ?? '') == 'ss' ? 'selected' : ''; ?>>SS</option>
+                    <option value="s" <?php echo ($_GET['talla'] ?? '') == 's' ? 'selected' : ''; ?>>S</option>
+                    <option value="m" <?php echo ($_GET['talla'] ?? '') == 'm' ? 'selected' : ''; ?>>M</option>
+                    <option value="l" <?php echo ($_GET['talla'] ?? '') == 'l' ? 'selected' : ''; ?>>L</option>
+                    <option value="xl" <?php echo ($_GET['talla'] ?? '') == 'xl' ? 'selected' : ''; ?>>XL</option>
                 </select>
+
+                <label for="unidad">Unidad:</label>
+<select id="unidad" name="unidad" required>
+    <option value="" <?php echo ($_GET['unidad'] ?? '') == '' ? 'selected' : ''; ?>>pieza</option>
+    <option value="pieza" <?php echo ($_GET['unidad'] ?? '') == 'pieza' ? 'selected' : ''; ?>>pieza</option>
+</select>
 
 
     <style>

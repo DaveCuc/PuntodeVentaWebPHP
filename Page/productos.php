@@ -51,8 +51,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mensaje = "Error al actualizar el producto: " . $stmt->error;
         }
         $stmt->close();
+    } elseif (isset($_POST['agregar_producto'])) {
+        // Agregar nuevo producto
+        $articulo = $_POST['articulo'];
+        $descripcion = $_POST['descripcion'];
+        $unidad = $_POST['unidad'];
+        $modelo = $_POST['modelo'];
+        $talla = $_POST['talla'];
+        $color = $_POST['color'];
+        $precio = $_POST['precio'];
+        $linkImagen = $_POST['linkImagen'];
+        $stock = $_POST['stock'];
+
+        $query = "INSERT INTO productos (Articulo, Descripcion, Unidad, Modelo, Talla, Color, Precio, linkImagen, stock, estado) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'activo')";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssssssdsi", $articulo, $descripcion, $unidad, $modelo, $talla, $color, $precio, $linkImagen, $stock);
+        if ($stmt->execute()) {
+            $mensaje = "Producto agregado correctamente.";
+        } else {
+            $mensaje = "Error al agregar el producto: " . $stmt->error;
+        }
+        $stmt->close();
     }
 }
+
 
 // Consultar productos con búsqueda
 $productos = [];
@@ -229,27 +252,37 @@ $stmt->close();
                 <textarea id="descripcion" name="descripcion"><?php echo $_GET['descripcion'] ?? ''; ?></textarea>
 
                 <label for="unidad">Unidad:</label>
-                <input type="text" id="unidad" name="unidad" value="<?php echo $_GET['unidad'] ?? ''; ?>">
+                <select id="unidad" name="unidad" required>
+                    <option value="" <?php echo ($_GET['unidad'] ?? '') == '' ? 'selected' : ''; ?>>Selecciona la unidad</option>
+                    <option value="pieza" <?php echo ($_GET['unidad'] ?? '') == 'pieza' ? 'selected' : ''; ?>>pieza</option>
+                </select>
 
                 <label for="modelo">Modelo:</label>
                 <input type="text" id="modelo" name="modelo" value="<?php echo $_GET['modelo'] ?? ''; ?>">
 
                 <label for="talla">Talla:</label>
-                <input type="text" id="talla" name="talla" value="<?php echo $_GET['talla'] ?? ''; ?>">
+                <select id="talla" name="talla" required>
+                    <option value="">Seleccione una talla</option>
+                    <option value="ss" <?php echo ($_GET['talla'] ?? '') == 'ss' ? 'selected' : ''; ?>>SS</option>
+                    <option value="s" <?php echo ($_GET['talla'] ?? '') == 's' ? 'selected' : ''; ?>>S</option>
+                    <option value="m" <?php echo ($_GET['talla'] ?? '') == 'm' ? 'selected' : ''; ?>>M</option>
+                    <option value="l" <?php echo ($_GET['talla'] ?? '') == 'l' ? 'selected' : ''; ?>>L</option>
+                    <option value="xl" <?php echo ($_GET['talla'] ?? '') == 'xl' ? 'selected' : ''; ?>>XL</option>
+                </select>
 
                 <label for="color">Color:</label>
                 <input type="text" id="color" name="color" value="<?php echo $_GET['color'] ?? ''; ?>">
 
                 <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio" value="<?php echo $_GET['precio'] ?? ''; ?>" required>
+                <input type="number" id="precio" name="precio" value="<?php echo $_GET['precio'] ?? ''; ?>" min="1" step="0.01" required>
 
                 <label for="linkImagen">Enlace de la Imagen:</label>
                 <input type="url" id="linkImagen" name="linkImagen" value="<?php echo $_GET['linkImagen'] ?? ''; ?>" required>
 
                 <label for="stock">Stock:</label>
-                <input type="number" id="stock" name="stock" value="<?php echo $_GET['stock'] ?? ''; ?>" required>
+                <input type="number" id="stock" name="stock" value="<?php echo $_GET['stock'] ?? ''; ?>" min="1" required>   
 
-                <button type="submit" name="actualizar_producto">Guardar Producto</button>
+                <button type="submit" name="agregar_producto">Agregar Producto</button>
             </form>
         </div>
 

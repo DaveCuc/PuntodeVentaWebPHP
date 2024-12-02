@@ -206,8 +206,6 @@ $productos_result = $conn->query($productos_query);
     <footer>
         <p>© 2024 Pretty Woman Boutique. Todos los derechos reservados.</p>
     </footer>
-
-    
 </body>
 </html>
 <?php
